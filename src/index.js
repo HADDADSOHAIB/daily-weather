@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
 import $ from 'jquery';
 import data from 'country-data';
