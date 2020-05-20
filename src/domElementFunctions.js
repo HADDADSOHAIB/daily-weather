@@ -123,6 +123,9 @@ const weatherCard = ({
     </div>
     ${rain ? rainCard(rain) : ''}
     ${snow ? snowCard(snow) : ''}
+    <div class="d-flex justify-content-center mt-3">
+      <button class="btn-success btn">select another city</button>
+    </div>
   </div>
 </div>
 `;
