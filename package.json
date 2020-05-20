@@ -1,0 +1,25 @@
+{
+  "name": "daily-weather",
+  "version": "1.0.0",
+  "description": "A application where you can get your daily weather",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack --watch --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HADDADSOHAIB/daily-weather.git"
+  },
+  "author": "Sohaib Haddad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HADDADSOHAIB/daily-weather/issues"
+  },
+  "homepage": "https://github.com/HADDADSOHAIB/daily-weather#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
