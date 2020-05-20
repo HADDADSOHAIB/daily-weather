@@ -21,7 +21,7 @@ const getWeather = (city, state, country) => {
   searchString += `${country.trim()}`;
 
   const apiKey = '5d11c0834bf383929d17b0a9c78b7214';
-  return axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${apiKey}`)
+  return axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${apiKey}`)
     .then((res) => processResponse(res));
 };
 
