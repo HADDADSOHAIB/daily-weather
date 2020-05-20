@@ -1,5 +1,4 @@
-/* eslint-disable func-names */
-/* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-names, import/no-unresolved, prefer-arrow-callback */
 import $ from 'jquery';
 import data from 'country-data';
 import 'bootstrap';
