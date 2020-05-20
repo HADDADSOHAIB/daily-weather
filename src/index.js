@@ -4,7 +4,7 @@ import data from 'country-data';
 import axios from 'axios';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import { chooseCityCard, message } from './domElementFunctions';
+import { chooseCityCard, message, weatherCard } from './domElementFunctions';
 import './style.css';
 
 const allContries = data.countries.all.map((e) => ({
@@ -14,7 +14,7 @@ const allContries = data.countries.all.map((e) => ({
 }));
 
 document.querySelector('.content').insertAdjacentHTML('afterbegin', chooseCityCard(allContries));
-document.querySelector('#choose-city #submit').addEventListener('click', async function (e) {
+document.querySelector('#choose-city #submit').addEventListener('click', function (e) {
   e.preventDefault();
   const validForm = document.querySelector('#choose-city form').checkValidity();
   const country = document.querySelector('#country');
@@ -27,16 +27,31 @@ document.querySelector('#choose-city #submit').addEventListener('click', async f
       searchString += `${state.value.trim()},`
     }
     searchString += `${country.value.trim()}`;
-    state.value = '';
-    country.value = '';
-    city.value = '';
 
     const apiKey = '5d11c0834bf383929d17b0a9c78b7214';
-    const weather = await axios.get(`api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${apiKey}`);
+    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${apiKey}`).then((res) => {
 
-    console.log(weather);
+      state.value = '';
+      country.value = '';
+      city.value = '';
+      console.log(res);
+      const weather = res.data;
+      console.log(weather);
+      document.querySelector('.content').insertAdjacentHTML('afterbegin', weatherCard({
+        city: weather.name,
+        weatherDesc: weather.weather[0],
+        temp: weather.main.temp,
+        pressure: weather.main.pressure,
+        humidity: weather.main.humidity,
+        visibility: weather.visibility,
+        wind: weather.wind,
+        cloud: weather.clouds.all,
+      }));
+    }).catch((err) => {
+      document.querySelector('.content').insertAdjacentHTML('afterbegin', message(err.response.data.message));
+    });
   } else if (!validForm) {
-    document.querySelector('.content').insertAdjacentHTML('afterbegin', message('All field are required'));
+    document.querySelector('.content').insertAdjacentHTML('afterbegin', message('All fields (except the state) are required'));
     $('.alert').alert();
   } else if (!validCountry) {
     document.querySelector('.content').insertAdjacentHTML('afterbegin', message('Choose a country from the dropdown'));
