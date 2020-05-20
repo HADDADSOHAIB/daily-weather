@@ -1,10 +1,10 @@
 /* eslint-disable prefer-arrow-callback */
 import $ from 'jquery';
 import data from 'country-data';
-import axios from 'axios';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { chooseCityCard, message, weatherCard } from './domElementFunctions';
+import weatherService from './weatherService';
 import './style.css';
 
 const allContries = data.countries.all.map((e) => ({
@@ -22,32 +22,11 @@ document.querySelector('#choose-city #submit').addEventListener('click', functio
   const city = document.querySelector('#city');
   const validCountry = allContries.find((el) => el.code === country.value);
   if (validCountry && validForm) {
-    let searchString = `${city.value.trim().split(' ').join('+')},`;
-    if (state.value.trim() !== '') {
-      searchString += `${state.value.trim().split(' ').join('+')},`;
-    }
-    searchString += `${country.value.trim()}`;
-
-    const apiKey = '5d11c0834bf383929d17b0a9c78b7214';
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${apiKey}`).then((res) => {
-
+    weatherService(city.value, state.value, country.value).then((res) => {
       state.value = '';
       country.value = '';
       city.value = '';
-
-      const weather = res.data;
-      document.querySelector('.content').insertAdjacentHTML('afterbegin', weatherCard({
-        city: weather.name,
-        weatherDesc: weather.weather[0],
-        temp: weather.main.temp,
-        pressure: weather.main.pressure,
-        humidity: weather.main.humidity,
-        visibility: (weather.visibility ? weather.visibility : 'Not available'),
-        wind: weather.wind,
-        cloud: weather.clouds.all,
-        rain: (weather.rain ? weather.rain : undefined),
-        snow: (weather.snow ? weather.snow : undefined),
-      }));
+      document.querySelector('.content').insertAdjacentHTML('afterbegin', weatherCard(res));
     }).catch((err) => {
       document.querySelector('.content').insertAdjacentHTML('afterbegin', message(err.response.data.message));
     });

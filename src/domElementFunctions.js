@@ -41,6 +41,34 @@ const message = (msg) => `
 </div>
 `;
 
+const rainCard = (rain) => `
+<div class="d-flex justify-content-around">
+  <div>
+    <span class="badge badge-light m-1">Last hour: ${rain['1h']} mm </span>
+  </div>
+  <div>
+    <i class="fas mx-2 fa-cloud-showers-heavy fa-2x"></i>
+  </div>
+  <div>
+    <span class="badge badge-light m-1">Last 3h hour: ${rain['3h']} mm %</span>
+  </div>
+</div>
+`;
+
+const snowCard = (snow) => `
+<div class="d-flex justify-content-around">
+  <div>
+    <span class="badge badge-light m-1">Last hour: ${snow['1h']} mm </span>
+  </div>
+  <div>
+    <i class="fas mx-2 fa-snowflake fa-2x"></i>
+  </div>
+  <div>
+    <span class="badge badge-light m-1">Last 3h hour: ${snow['3h']} mm %</span>
+  </div>
+</div>
+`;
+
 const weatherCard = ({
   city,
   weatherDesc,
@@ -65,7 +93,7 @@ const weatherCard = ({
         <span class="badge badge-light m-1">Temperature: ${Math.round(parseInt(temp - 273.15, 10))} °C</span>
       </div>
       <div>
-        <i class="fas mx-2 fa-wind fa-2x"></i>
+        <i class="fas mx-2 fa-temperature-high fa-2x"></i>
       </div>
       <div>
         <span class="badge badge-light m-1">Humidity: ${humidity} %</span>
@@ -76,7 +104,7 @@ const weatherCard = ({
         <span class="badge badge-light m-1">Wind: ${wind.speed} m/s</span>
       </div>
       <div>
-        <i class="fas mx-2 fa-temperature-high fa-2x"></i>
+        <i class="fas mx-2 fa-wind fa-2x"></i>
       </div>
       <div>
         <span class="badge badge-light m-1">Pressure: ${pressure} hPa</span>
@@ -93,32 +121,8 @@ const weatherCard = ({
         <span class="badge badge-light m-1">Cloudiness: ${cloud} %</span>
       </div>
     </div>
-    ${rain ? `
-      <div class="d-flex justify-content-around">
-        <div>
-          <span class="badge badge-light m-1">Last hour: ${rain['1h']} mm </span>
-        </div>
-        <div>
-          <i class="fas mx-2 fa-cloud-showers-heavy fa-2x"></i>
-        </div>
-        <div>
-          <span class="badge badge-light m-1">Last 3h hour: ${rain['3h']} mm %</span>
-        </div>
-      </div>
-    ` : ''}
-    ${snow ? `
-      <div class="d-flex justify-content-around">
-        <div>
-          <span class="badge badge-light m-1">Last hour: ${snow['1h']} mm </span>
-        </div>
-        <div>
-          <i class="fas mx-2 fa-snowflake fa-2x"></i>
-        </div>
-        <div>
-          <span class="badge badge-light m-1">Last 3h hour: ${snow['3h']} mm %</span>
-        </div>
-      </div>
-    ` : ''}
+    ${rain ? rainCard(rain) : ''}
+    ${snow ? snowCard(snow) : ''}
   </div>
 </div>
 `;
