@@ -41,37 +41,84 @@ const message = (msg) => `
 </div>
 `;
 
-const weatherCard = ({ city, weatherDesc, temp, pressure, humidity, visibility, wind, cloud }) => `
+const weatherCard = ({
+  city,
+  weatherDesc,
+  temp, pressure,
+  humidity,
+  visibility,
+  wind,
+  cloud,
+  rain,
+  snow,
+}) => `
 <div class="card m-4" id="weather">
   <div class="card-header d-flex justify-content-center">
-    <h6 class="mb-0 font-weight-bold">The Weather</h6>
+    <h6 class="mb-0 font-weight-bold">The Weather for ${city}</h6>
   </div>
   <div class="card-body">
     <div class="d-flex justify-content-around">
-      <p>${city}: </p><p>${weatherDesc.main}, ${weatherDesc.description}</p>
+      <p>${weatherDesc.main}, ${weatherDesc.description}</p>
     </div>
     <div class="d-flex justify-content-around">
       <div>
-        <span class="badge badge-danger m-1">Temperature: ${Math.round(parseInt(temp - 273.15, 10))} °C</span>
+        <span class="badge badge-light m-1">Temperature: ${Math.round(parseInt(temp - 273.15, 10))} °C</span>
       </div>
       <div>
-        <span class="badge badge-dark m-1">Pressure: ${pressure} hPa</span>
+        <i class="fas mx-2 fa-wind fa-2x"></i>
       </div>
       <div>
-        <span class="badge badge-info m-1">Humidity: ${humidity} %</span>
+        <span class="badge badge-light m-1">Humidity: ${humidity} %</span>
       </div>
     </div>
     <div class="d-flex justify-content-around">
       <div>
-        <span class="badge badge-success m-1">Visibility: ${visibility}</span>
+        <span class="badge badge-light m-1">Wind: ${wind.speed} m/s</span>
+      </div>
+      <div>
+        <i class="fas mx-2 fa-temperature-high fa-2x"></i>
+      </div>
+      <div>
+        <span class="badge badge-light m-1">Pressure: ${pressure} hPa</span>
+      </div>
+    </div>
+    <div class="d-flex justify-content-around">
+      <div>
+        <span class="badge badge-light m-1">Visibility: ${visibility}</span>
+      </div>
+      <div>
+        <i class="fas mx-2 fa-cloud-meatball fa-2x"></i>
       </div>
       <div>
         <span class="badge badge-light m-1">Cloudiness: ${cloud} %</span>
       </div>
-      <div>
-        <span class="badge badge-warning m-1">Wind: ${wind.speed} m/s</span>
-      </div>
     </div>
+    ${rain ? `
+      <div class="d-flex justify-content-around">
+        <div>
+          <span class="badge badge-light m-1">Last hour: ${rain['1h']} mm </span>
+        </div>
+        <div>
+          <i class="fas mx-2 fa-cloud-showers-heavy fa-2x"></i>
+        </div>
+        <div>
+          <span class="badge badge-light m-1">Last 3h hour: ${rain['3h']} mm %</span>
+        </div>
+      </div>
+    ` : ''}
+    ${snow ? `
+      <div class="d-flex justify-content-around">
+        <div>
+          <span class="badge badge-light m-1">Last hour: ${snow['1h']} mm </span>
+        </div>
+        <div>
+          <i class="fas mx-2 fa-snowflake fa-2x"></i>
+        </div>
+        <div>
+          <span class="badge badge-light m-1">Last 3h hour: ${snow['3h']} mm %</span>
+        </div>
+      </div>
+    ` : ''}
   </div>
 </div>
 `;

@@ -22,9 +22,9 @@ document.querySelector('#choose-city #submit').addEventListener('click', functio
   const city = document.querySelector('#city');
   const validCountry = allContries.find((el) => el.code === country.value);
   if (validCountry && validForm) {
-    let searchString = `${city.value.trim()},`;
+    let searchString = `${city.value.trim().split(' ').join('+')},`;
     if (state.value.trim() !== '') {
-      searchString += `${state.value.trim()},`
+      searchString += `${state.value.trim().split(' ').join('+')},`;
     }
     searchString += `${country.value.trim()}`;
 
@@ -34,18 +34,19 @@ document.querySelector('#choose-city #submit').addEventListener('click', functio
       state.value = '';
       country.value = '';
       city.value = '';
-      console.log(res);
+
       const weather = res.data;
-      console.log(weather);
       document.querySelector('.content').insertAdjacentHTML('afterbegin', weatherCard({
         city: weather.name,
         weatherDesc: weather.weather[0],
         temp: weather.main.temp,
         pressure: weather.main.pressure,
         humidity: weather.main.humidity,
-        visibility: weather.visibility,
+        visibility: (weather.visibility ? weather.visibility : 'Not available'),
         wind: weather.wind,
         cloud: weather.clouds.all,
+        rain: (weather.rain ? weather.rain : undefined),
+        snow: (weather.snow ? weather.snow : undefined),
       }));
     }).catch((err) => {
       document.querySelector('.content').insertAdjacentHTML('afterbegin', message(err.response.data.message));
