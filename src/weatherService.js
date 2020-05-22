@@ -1,7 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import axios from 'axios';
 
-const processResponse = (res) => ({
+const processResponse = (unit, res) => ({
+  unit,
   city: res.data.name,
   weatherDesc: res.data.weather[0],
   temp: res.data.main.temp,
@@ -14,7 +15,7 @@ const processResponse = (res) => ({
   snow: (res.data.snow ? res.data.snow : undefined),
 });
 
-const getWeather = (city, state, country) => {
+const getWeather = (city, state, country, units) => {
   let searchString = `${city.trim().split(' ').join('+')},`;
   if (state.trim() !== '') {
     searchString += `${state ? state.trim().split(' ').join('+') : ''},`;
@@ -22,8 +23,8 @@ const getWeather = (city, state, country) => {
   searchString += `${country.trim()}`;
 
   const apiKey = '5d11c0834bf383929d17b0a9c78b7214';
-  return axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${apiKey}`)
-    .then((res) => processResponse(res));
+  return axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${apiKey}&units=${units}`)
+    .then((res) => processResponse(units, res));
 };
 
 export default getWeather;

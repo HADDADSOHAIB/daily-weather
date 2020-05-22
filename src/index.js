@@ -15,7 +15,16 @@ const allContries = data.countries.all.map((e) => ({
 }));
 
 const insertChooseCard = () => {
+  let units = 'metric';
+
   document.querySelector('.content').insertAdjacentHTML('afterbegin', chooseCityCard(allContries));
+  document.querySelector('#degree').addEventListener('click', () => {
+    units = 'metric';
+  });
+  document.querySelector('#fernheit').addEventListener('click', () => {
+    units = 'imperial';
+  });
+
   document.querySelector('#choose-city #submit').addEventListener('click', function (e) {
     e.preventDefault();
     const validForm = document.querySelector('#choose-city form').checkValidity();
@@ -24,7 +33,7 @@ const insertChooseCard = () => {
     const city = document.querySelector('#city');
     const validCountry = allContries.find((el) => el.code === country.value);
     if (validCountry && validForm) {
-      weatherService(city.value, state.value, country.value).then((res) => {
+      weatherService(city.value, state.value, country.value, units).then((res) => {
         clearChooseCard();
         document.querySelector('.content').insertAdjacentHTML('afterbegin', weatherCard(res));
         document.querySelector('#weather button').addEventListener('click', function () {

@@ -25,6 +25,12 @@ const chooseCityCard = (countries) => `
         <label for="city">City:</label>
         <input type="text" class="form-control" id="city" name="city" required>
       </div>
+      <div class="form-group">
+        <input type="radio" id="degree" class="ml-3" name="units" value="metric" checked>
+        <label for="degree">°C</label>
+        <input type="radio" id="fernheit" class="ml-3" name="units" value="imperial">
+        <label for="fernheit">°F</label>
+      </div>
       <button type="submit" class="btn btn-primary" id="submit">Show</button>
       ${optionCountries(countries)}
     </form>
@@ -44,13 +50,13 @@ const message = (msg) => `
 const rainCard = (rain) => `
 <div class="d-flex justify-content-around">
   <div>
-    <span class="badge badge-light m-1">Last hour: ${rain['1h']} mm </span>
+    <span class="badge badge-light m-1">Last hour: ${rain['1h'] ? rain['1h'] : 'not available'} mm </span>
   </div>
   <div>
     <i class="fas mx-2 fa-cloud-showers-heavy fa-2x"></i>
   </div>
   <div>
-    <span class="badge badge-light m-1">Last 3h hour: ${rain['3h']} mm %</span>
+    <span class="badge badge-light m-1">Last 3h hour: ${rain['1h'] ? rain['1h'] : 'not available'} mm %</span>
   </div>
 </div>
 `;
@@ -58,18 +64,19 @@ const rainCard = (rain) => `
 const snowCard = (snow) => `
 <div class="d-flex justify-content-around">
   <div>
-    <span class="badge badge-light m-1">Last hour: ${snow['1h']} mm </span>
+    <span class="badge badge-light m-1">Last hour: ${snow['1h'] ? snow['1h'] : 'not available'} mm </span>
   </div>
   <div>
     <i class="fas mx-2 fa-snowflake fa-2x"></i>
   </div>
   <div>
-    <span class="badge badge-light m-1">Last 3h hour: ${snow['3h']} mm %</span>
+    <span class="badge badge-light m-1">Last 3h hour: ${snow['3h'] ? snow['3h'] : 'not available'} mm %</span>
   </div>
 </div>
 `;
 
 const weatherCard = ({
+  unit,
   city,
   weatherDesc,
   temp, pressure,
@@ -90,7 +97,7 @@ const weatherCard = ({
     </div>
     <div class="d-flex justify-content-around">
       <div>
-        <span class="badge badge-light m-1">Temperature: ${Math.round(parseInt(temp - 273.15, 10))} °C</span>
+        <span class="badge badge-light m-1">Temperature: ${temp} ${unit === 'metric' ? '°C' : '°F'}</span>
       </div>
       <div>
         <i class="fas mx-2 fa-temperature-high fa-2x"></i>
@@ -101,7 +108,7 @@ const weatherCard = ({
     </div>
     <div class="d-flex justify-content-around">
       <div>
-        <span class="badge badge-light m-1">Wind: ${wind.speed} m/s</span>
+        <span class="badge badge-light m-1">Wind: ${wind.speed} ${unit === 'metric' ? 'm/s' : 'miles/h'}</span>
       </div>
       <div>
         <i class="fas mx-2 fa-wind fa-2x"></i>
