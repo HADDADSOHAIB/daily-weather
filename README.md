@@ -33,7 +33,6 @@ and open your files on the browser.
 - Twitter: [@HaddadSohaib](https://twitter.com/HaddadSohaib)
 - Linkedin: [linkedin](https://www.linkedin.com/in/sohaibhaddad/)
 
-👤 **Facundo Iglesias**
 
 ## 🤝 Contributing
 
