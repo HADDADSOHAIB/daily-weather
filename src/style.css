@@ -1,0 +1,9 @@
+body {
+  font-family: 'Comic Neue' sans-serif;
+  background-size: cover;
+}
+
+#choose-city,
+#weather {
+  min-width: 400px;
+}
