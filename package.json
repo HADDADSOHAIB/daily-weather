@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "all-the-cities": "^3.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "city-state-country": "^1.0.3",
     "country-data": "0.0.31",
